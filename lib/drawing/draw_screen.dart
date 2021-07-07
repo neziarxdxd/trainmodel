@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trainmodel/services/recognizer.dart';
 
 class DrawScreen extends StatefulWidget {
   const DrawScreen({Key? key}) : super(key: key);
@@ -8,6 +9,14 @@ class DrawScreen extends StatefulWidget {
 }
 
 class _DrawScreenState extends State<DrawScreen> {
+  final _recognizer = Recognizer();
+
+  @override
+  void initState() {
+    super.initState();
+    _initModel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,5 +32,10 @@ class _DrawScreenState extends State<DrawScreen> {
         ),
       ),
     );
+  }
+
+  void _initModel() async {
+    var res = await _recognizer.loadModel();
+    print(res);
   }
 }
