@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traindata/screen/drawing_paint.dart';
+import 'package:traindata/services/recognizer.dart';
 import 'package:traindata/utils/constant.dart';
 
 class DrawingScreen extends StatefulWidget {
@@ -10,8 +11,16 @@ class DrawingScreen extends StatefulWidget {
 }
 
 class _DrawingScreenState extends State<DrawingScreen> {
-  // TODO: add await recognizer
+  final recognizer = Recognizer();
   final _points = List<Offset>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initModel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,5 +45,9 @@ class _DrawingScreenState extends State<DrawingScreen> {
                 painter: DrawingPainter(_points),
               ),
             )));
+  }
+
+  void _initModel() async {
+    var res = await recognizer.loadModel();
   }
 }
