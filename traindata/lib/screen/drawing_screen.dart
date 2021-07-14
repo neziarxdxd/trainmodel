@@ -1,19 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:traindata/model/prediction.dart';
 import 'package:traindata/screen/drawing_paint.dart';
 import 'package:traindata/services/recognizer.dart';
 import 'package:traindata/utils/constant.dart';
 
-class DrawingScreen extends StatefulWidget {
-  const DrawingScreen({Key key}) : super(key: key);
-
+class DrawScreen extends StatefulWidget {
   @override
-  _DrawingScreenState createState() => _DrawingScreenState();
+  _DrawScreenState createState() => _DrawScreenState();
 }
 
-class _DrawingScreenState extends State<DrawingScreen> {
-  final _recognizer = Recognizer();
+class _DrawScreenState extends State<DrawScreen> {
   final _points = List<Offset>();
+  final _recognizer = Recognizer();
   List<Prediction> _prediction;
   bool initialize = false;
 
@@ -26,27 +26,52 @@ class _DrawingScreenState extends State<DrawingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text("Kulitan Test"),
-        ),
-        body: Container(
-            width: Constants.canvasSize,
-            height: Constants.canvasSize,
-            child: GestureDetector(
-              onPanUpdate: (DragUpdateDetails details) {
-                Offset _localPosition = details.localPosition;
-                setState(() {
-                  _points.add(_localPosition);
-                });
-              },
-              onPanEnd: (DragEndDetails details) {
-                _points.add(null);
-              },
-              child: CustomPaint(
-                painter: DrawingPainter(_points),
+      appBar: AppBar(
+        title: Text('Digit Recognizer'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'MNIST database of handwritten digits',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'The digits have been size-normalized and centered in a fixed-size images (28 x 28)',
+                      )
+                    ],
+                  ),
+                ),
               ),
-            )));
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          _drawCanvasWidget(),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.clear),
+        onPressed: () {
+          setState(() {
+            _points.clear();
+            _prediction.clear();
+          });
+        },
+      ),
+    );
   }
 
   Widget _drawCanvasWidget() {

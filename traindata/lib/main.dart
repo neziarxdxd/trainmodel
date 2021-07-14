@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:traindata/screen/drawing_screen.dart';
+import './screen/drawing_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DrawingScreen(),
+      home: DrawScreen(),
     );
   }
 }
