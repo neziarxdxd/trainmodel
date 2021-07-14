@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traindata/model/prediction.dart';
 import 'package:traindata/screen/drawing_paint.dart';
 import 'package:traindata/services/recognizer.dart';
 import 'package:traindata/utils/constant.dart';
@@ -11,12 +12,13 @@ class DrawingScreen extends StatefulWidget {
 }
 
 class _DrawingScreenState extends State<DrawingScreen> {
-  final recognizer = Recognizer();
+  final _recognizer = Recognizer();
   final _points = List<Offset>();
+  List<Prediction> _prediction;
+  bool initialize = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initModel();
   }
@@ -47,7 +49,47 @@ class _DrawingScreenState extends State<DrawingScreen> {
             )));
   }
 
+  Widget _drawCanvasWidget() {
+    return Container(
+      width: Constants.canvasSize + Constants.borderSize * 2,
+      height: Constants.canvasSize + Constants.borderSize * 2,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+          width: Constants.borderSize,
+        ),
+      ),
+      child: GestureDetector(
+        onPanUpdate: (DragUpdateDetails details) {
+          Offset _localPosition = details.localPosition;
+          if (_localPosition.dx >= 0 &&
+              _localPosition.dx <= Constants.canvasSize &&
+              _localPosition.dy >= 0 &&
+              _localPosition.dy <= Constants.canvasSize) {
+            setState(() {
+              _points.add(_localPosition);
+            });
+          }
+        },
+        onPanEnd: (DragEndDetails details) {
+          _points.add(null);
+          _recognize();
+        },
+        child: CustomPaint(
+          painter: DrawingPainter(_points),
+        ),
+      ),
+    );
+  }
+
   void _initModel() async {
-    var res = await recognizer.loadModel();
+    var res = await _recognizer.loadModel();
+  }
+
+  void _recognize() async {
+    List<dynamic> pred = await _recognizer.recognize(_points);
+    setState(() {
+      _prediction = pred.map((json) => Prediction.fromJson(json)).toList();
+    });
   }
 }
