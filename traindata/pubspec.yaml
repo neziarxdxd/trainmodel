@@ -52,7 +52,6 @@ flutter:
     - assets/labels.txt
     - assets/mnist.tflite
     - assets/model_edgetpu.tflite
-    # - assets/test.tflite
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
