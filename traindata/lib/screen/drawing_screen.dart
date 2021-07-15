@@ -11,6 +11,7 @@ class DrawScreen extends StatefulWidget {
   _DrawScreenState createState() => _DrawScreenState();
 }
 
+// yoko na T_T T_T T_T
 class _DrawScreenState extends State<DrawScreen> {
   final _points = List<Offset>();
   final _recognizer = Recognizer();
