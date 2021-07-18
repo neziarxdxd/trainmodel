@@ -114,6 +114,7 @@ class _DrawScreenState extends State<DrawScreen> {
 
   void _recognize() async {
     List<dynamic> pred = await _recognizer.recognize(_points);
+    print(pred);
     setState(() {
       _prediction = pred.map((json) => Prediction.fromJson(json)).toList();
       print(_prediction);

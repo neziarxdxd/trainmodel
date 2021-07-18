@@ -22,7 +22,7 @@ class Recognizer {
     Tflite.close();
     // TODO: add path
     return Tflite.loadModel(
-        model: "assets/mnist.tflite", labels: "assets/labels.txt");
+        model: "assets/kulitandata.tflite", labels: "assets/labels.txt");
   }
 
   dispose() {
