@@ -47,13 +47,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/model.tflite
-    - assets/model_kulitan.tflite
+    # - assets/lordthankyou.tflite
+    # - assets/lordhelp.tflite
+    # - assets/model.tflite
+    # - assets/model_kulitan.tflite
     - assets/labels.txt
-    - assets/mnist.tflite
-    - assets/model_edgetpu.tflite
-    - assets/lordgumanapo.tflite
-    - assets/kulitandata.tflite    
+    # - assets/mnist.tflite
+    # - assets/model_edgetpu.tflite
+    # - assets/lordgumanapo.tflite
+    - assets/lord_thankyou.tflite    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
